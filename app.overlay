@@ -1,0 +1,16 @@
+#include <zephyr/dt-bindings/gpio/gpio.h>
+
+/ {
+	aliases {
+		buzzer0 = &pet_tracker_buzzer;
+	};
+
+	pet_tracker_outputs {
+		compatible = "gpio-leds";
+
+		pet_tracker_buzzer: buzzer {
+			gpios = <&gpio0 16 GPIO_ACTIVE_HIGH>;
+			label = "Pet Tracker Grove Buzzer";
+		};
+	};
+};

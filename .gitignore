@@ -1,0 +1,76 @@
+# Zephyr / nRF Connect SDK build output
+build/
+build-*/
+twister-out/
+zephyr/
+modules/
+.west/
+
+# CMake generated files
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+compile_commands.json
+rules.ninja
+build.ninja
+*.ninja
+
+# Generated firmware artifacts
+*.elf
+*.hex
+*.bin
+*.uf2
+*.map
+*.lst
+*.img
+*.signed
+*.merged.hex
+*.stat
+*.config
+*.dts
+*.dtb
+
+# Kconfig and generated headers
+.config
+.config.old
+autoconf.h
+devicetree_generated.h
+
+# Logs and temporary files
+*.log
+*.tmp
+*.temp
+*.bak
+*.orig
+*.swp
+*.swo
+*~
+
+# Python cache and virtual environments
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.venv/
+venv/
+env/
+
+# Tool caches
+.cache/
+.ninja_deps
+.ninja_log
+
+# IDE and editor state
+.idea/
+.vscode/
+*.code-workspace
+
+# OS metadata
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Local secrets and environment files
+.env
+.env.*
+!.env.example

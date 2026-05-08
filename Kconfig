@@ -1,0 +1,31 @@
+source "Kconfig.zephyr"
+
+menu "Pet Tracker firmware"
+
+config PET_TRACKER_FIRMWARE_VERSION
+    string "Pet Tracker firmware version"
+    default "0.1.0"
+
+config PET_TRACKER_HEARTBEAT_INTERVAL_SECONDS
+    int "Boot heartbeat interval in seconds"
+    default 60
+    range 5 3600
+    help
+      Interval used by the MVP main loop to prove the device is alive without
+      busy polling.
+
+config PET_TRACKER_BUZZER
+    bool "Enable Grove active buzzer driver"
+    default n
+    help
+      Enable GPIO control for the prototype Grove active buzzer on the
+      devicetree alias buzzer0.
+
+config PET_TRACKER_BUZZER_STARTUP_MELODY
+    bool "Run buzzer startup melody on boot"
+    depends on PET_TRACKER_BUZZER
+    default n
+    help
+      Emit a short startup rhythm during boot for V0 hardware bring-up.
+
+endmenu
