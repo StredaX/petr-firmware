@@ -67,18 +67,18 @@ SDK version:
 Steps:
 
 1. Build firmware with `CONFIG_PET_TRACKER_BUZZER=y`.
-2. Keep `CONFIG_PET_TRACKER_BUZZER_STARTUP_MELODY=y` for the first bring-up test.
+2. Enable `CONFIG_PET_TRACKER_BUZZER_STARTUP_TONE=y` only for the buzzer bring-up test.
 3. Flash the firmware to the nRF9161 DK.
 4. Reset the board.
-5. Listen for the startup melody.
+5. Listen for the startup tone.
 6. Observe UART logs.
 
 Expected result:
 
-- Buzzer emits the startup rhythm during boot.
+- Buzzer emits one short startup tone during boot.
 - UART log includes `Buzzer initialized`.
-- UART log includes `Running buzzer startup melody`.
-- UART log includes `Buzzer startup melody complete`.
+- UART log includes `Running buzzer startup tone`.
+- UART log includes `Buzzer startup tone complete`.
 - Device remains responsive after the pattern.
 
 Actual result:
@@ -89,6 +89,7 @@ Notes:
 
 - Prototype pin: Arduino D2 / P0.16.
 - The Grove module is an active buzzer; the initial firmware test can use simple GPIO on/off control.
+- Keep `CONFIG_PET_TRACKER_BUZZER_STARTUP_TONE` disabled outside manual buzzer bring-up.
 
 ## TEST-HW-008: Vibration Motor
 
@@ -111,23 +112,42 @@ SDK version:
 
 Steps:
 
-1. Build firmware with the prototype vibration GPIO enabled.
-2. Flash the firmware to the nRF9161 DK.
-3. Trigger a short vibration test burst.
-4. Observe UART logs and confirm the DK does not reset.
+1. Confirm the motor circuit matches `docs/hardware/prototype-wiring.md`.
+2. Confirm the external rail is about 3.3 V with a multimeter.
+3. Build firmware with `CONFIG_PET_TRACKER_VIBRATION_MOTOR=y`.
+4. For this test only, enable `CONFIG_PET_TRACKER_VIBRATION_BOOT_TEST=y`.
+5. Flash the firmware to the nRF9161 DK.
+6. Reset the board.
+7. Observe one short vibration pulse.
+8. Observe UART logs and confirm the DK does not reset.
 
 Expected result:
 
-- Motor vibrates for the expected duration.
-- UART log records vibration start and completion.
+- Motor vibrates for the configured diagnostic pulse pattern.
+- UART log includes `Vibration motor initialized`.
+- UART log includes `Running vibration motor boot test`.
+- UART log includes `Vibration motor boot test pulse`.
+- UART log includes `Vibration motor boot test complete`.
 - No brownout, reset, or repeated boot log occurs.
 
 Actual result:
 
-- Not run yet.
+- Passed on 2026-05-12. Vibration motor works on the V0 prototype.
 
 Notes:
 
 - Prototype pin: Arduino D3 / P0.17.
-- Keep early test bursts short, for example 100 ms to 500 ms.
+- During troubleshooting, use longer pulses so Gate voltage can be measured.
+- After bring-up, return to short pulses, for example 100 ms to 500 ms.
 - Do not connect the motor directly to an MCU GPIO.
+- Keep `CONFIG_PET_TRACKER_VIBRATION_BOOT_TEST` disabled outside manual bring-up.
+
+Troubleshooting if the motor does not vibrate:
+
+1. Measure Gate to GND during a boot-test pulse. Expected: about 3 V.
+2. Measure Motor+ to GND. Expected: about 3.3 V from the external rail.
+3. Measure Source to GND. Expected: 0 V.
+4. Check IRLZ44N pinout with text facing you and legs down: left Gate, middle Drain, right Source.
+5. Check the flyback diode direction: stripe/cathode to Motor+, other side to Motor-/Drain.
+6. Briefly test the motor directly from the 3.3 V rail and GND to confirm the motor itself works.
+7. Confirm nRF9161 DK GND and external rail GND are connected.

@@ -41,7 +41,7 @@ Expected responsibilities:
 - `board_pins`: read devicetree aliases or node labels for prototype pins.
 - `buzzer`: configure buzzer GPIO as inactive output and expose `buzzer_on()`, `buzzer_off()`, `buzzer_beep_ms()`.
 - `vibration_motor`: configure motor GPIO as inactive output and expose `vibration_motor_on()`, `vibration_motor_off()`, `vibration_motor_pulse_ms()`.
-- `main`: keep boot/state logging, initialize V0 drivers, run a short optional startup melody, then return to slow heartbeat.
+- `main`: keep boot/state logging, initialize V0 drivers, run a short optional startup tone, then return to slow heartbeat.
 
 ## Devicetree Plan
 
@@ -80,14 +80,16 @@ Add build-time switches so V0 tests do not run unexpectedly in later firmware:
 CONFIG_PET_TRACKER_V0_HARDWARE_TESTS
 CONFIG_PET_TRACKER_BUZZER
 CONFIG_PET_TRACKER_VIBRATION_MOTOR
-CONFIG_PET_TRACKER_BUZZER_STARTUP_MELODY
+CONFIG_PET_TRACKER_BUZZER_STARTUP_TONE
+CONFIG_PET_TRACKER_VIBRATION_BOOT_TEST
 ```
 
 Default behavior should be conservative:
 
 - Buzzer and vibration drivers can be enabled for V0 builds.
-- Boot startup melody should default to off after initial bench validation.
+- Boot startup tone should stay disabled outside manual buzzer bring-up.
 - Vibration pulse duration should be capped.
+- Vibration boot test must stay disabled unless the MOSFET circuit has been checked.
 
 ## Bring-Up Sequence
 
@@ -104,7 +106,7 @@ Default behavior should be conservative:
 Recommended first patterns:
 
 ```text
-buzzer:    about 1.6 s startup rhythm with short groups and a longer final tone
+buzzer:    one 180 ms startup tone
 vibration: 200 ms on, 1 repeat
 ```
 

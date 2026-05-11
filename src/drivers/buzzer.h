@@ -11,7 +11,7 @@ int buzzer_init(void);
 int buzzer_on(void);
 int buzzer_off(void);
 int buzzer_beep_ms(uint32_t on_ms, uint32_t off_ms, uint8_t repeats);
-int buzzer_startup_melody(void);
+int buzzer_startup_tone(void);
 
 #ifdef __cplusplus
 }

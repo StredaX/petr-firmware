@@ -88,22 +88,13 @@ int buzzer_beep_ms(uint32_t on_ms, uint32_t off_ms, uint8_t repeats)
 	return 0;
 }
 
-int buzzer_startup_melody(void)
+int buzzer_startup_tone(void)
 {
 	static const struct {
 		uint16_t on_ms;
 		uint16_t off_ms;
 	} steps[] = {
-		{ 70, 45 },
-		{ 70, 45 },
-		{ 120, 90 },
-		{ 70, 45 },
-		{ 70, 120 },
-		{ 150, 70 },
-		{ 80, 45 },
-		{ 80, 45 },
-		{ 180, 100 },
-		{ 320, 0 },
+		{ 180, 0 },
 	};
 
 	int err;

@@ -3,6 +3,7 @@
 / {
 	aliases {
 		buzzer0 = &pet_tracker_buzzer;
+		vibration0 = &pet_tracker_vibration;
 	};
 
 	pet_tracker_outputs {
@@ -11,6 +12,11 @@
 		pet_tracker_buzzer: buzzer {
 			gpios = <&gpio0 16 GPIO_ACTIVE_HIGH>;
 			label = "Pet Tracker Grove Buzzer";
+		};
+
+		pet_tracker_vibration: vibration {
+			gpios = <&gpio0 17 GPIO_ACTIVE_HIGH>;
+			label = "Pet Tracker Vibration Motor";
 		};
 	};
 };

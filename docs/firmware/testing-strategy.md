@@ -37,7 +37,7 @@ If a feature has testable pure logic, add an automated test in the same developm
 | MQTT service | Topic construction, reconnect/backoff decisions, QoS choices, offline behavior with fake client. | Local EMQX publish/subscribe test, later LTE broker test. |
 | Location/GNSS | Location state mapping, timeout handling, stale fix handling using fake GNSS provider. | Outdoor GNSS fix test with timeout and UART/MQTT evidence. |
 | BMA400/activity | Thresholds, activity classification, wake/inactivity mapping using sample data. | I2C detection and interrupt/wake-on-motion procedure. |
-| Buzzer | Pattern timing table validation where practical. | `TEST-HW-007` startup melody on D2 / P0.16. |
+| Buzzer | Pattern timing table validation where practical. | `TEST-HW-007` startup tone on D2 / P0.16. |
 | Vibration motor | Duration limits and command validation. | `TEST-HW-008` short pulse on D3 / P0.17 without reset. |
 | Power/retry logic | Backoff intervals, sleep eligibility, pending-work gates. | Current draw and sleep/wake manual measurement. |
 | OTA/update | Manifest parsing, version checks, battery preconditions, update state machine, rollback decisions. | USB/J-Link version A to version B check now; future MCUBoot/FOTA HIL. |
@@ -50,7 +50,7 @@ V0 should have:
 ```text
 build for nrf9161dk/nrf9161/ns
 manual boot/UART test
-manual buzzer startup melody test
+manual buzzer startup tone test
 manual vibration motor pulse test
 optional BMA400 I2C detection test
 ```

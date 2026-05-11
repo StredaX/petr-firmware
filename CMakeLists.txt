@@ -10,5 +10,6 @@ target_sources(app PRIVATE
     src/app/app_config.c
     src/app/app_state.c
     src/drivers/buzzer.c
+    src/drivers/vibration_motor.c
     src/platform/diagnostics.c
 )

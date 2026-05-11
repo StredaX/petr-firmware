@@ -195,6 +195,7 @@ Current hardware docs:
 docs/hardware/hardware-inventory.md
 docs/hardware/prototype-wiring.md
 docs/firmware/v0-firmware-plan.md
+docs/firmware/implementation-roadmap.md
 ```
 
 Current tests:

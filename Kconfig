@@ -21,11 +21,52 @@ config PET_TRACKER_BUZZER
       Enable GPIO control for the prototype Grove active buzzer on the
       devicetree alias buzzer0.
 
-config PET_TRACKER_BUZZER_STARTUP_MELODY
-    bool "Run buzzer startup melody on boot"
+config PET_TRACKER_BUZZER_STARTUP_TONE
+    bool "Run buzzer startup tone on boot"
     depends on PET_TRACKER_BUZZER
     default n
     help
-      Emit a short startup rhythm during boot for V0 hardware bring-up.
+      Emit one short startup tone during boot for V0 hardware bring-up.
+
+config PET_TRACKER_VIBRATION_MOTOR
+    bool "Enable vibration motor driver"
+    default n
+    help
+      Enable GPIO control for the prototype vibration motor MOSFET on the
+      devicetree alias vibration0.
+
+config PET_TRACKER_VIBRATION_MAX_PULSE_MS
+    int "Maximum vibration pulse duration in milliseconds"
+    depends on PET_TRACKER_VIBRATION_MOTOR
+    default 500
+    range 50 2000
+    help
+      Maximum duration for one vibration pulse. This protects the prototype
+      from accidental long motor activation.
+
+config PET_TRACKER_VIBRATION_BOOT_TEST
+    bool "Run a short vibration pulse on boot"
+    depends on PET_TRACKER_VIBRATION_MOTOR
+    default n
+    help
+      Emit one short vibration pulse during boot for manual V0 hardware
+      bring-up. Keep disabled unless the motor driver circuit has been checked.
+
+config PET_TRACKER_VIBRATION_BOOT_TEST_MS
+    int "Vibration boot test pulse duration in milliseconds"
+    depends on PET_TRACKER_VIBRATION_MOTOR
+    default 1000
+    range 50 1000
+    help
+      Duration of the optional boot test pulse.
+
+config PET_TRACKER_VIBRATION_BOOT_TEST_REPEATS
+    int "Vibration boot test pulse repeat count"
+    depends on PET_TRACKER_VIBRATION_BOOT_TEST
+    default 3
+    range 1 5
+    help
+      Number of boot test pulses. Use multiple pulses during V0 bring-up so
+      the MOSFET gate can be checked with a multimeter.
 
 endmenu
