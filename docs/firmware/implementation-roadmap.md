@@ -127,6 +127,13 @@ Goal:
 
 - Start the automated test foundation before protocol work grows.
 
+Status:
+
+- Initial `tests/app_core` Zephyr `ztest` app added.
+- Covers app state transitions, invalid states, state names, and app config defaults.
+- Build-only verification passed on `nrf9161dk/nrf9161/ns` using Twister with short output path `D:\tw\app_core`.
+- Native execution with `native_sim` is pending host toolchain setup.
+
 Tasks:
 
 - Add Zephyr `ztest` or a practical host-test setup.

@@ -117,6 +117,30 @@ west --version
 
 If `west` is not found, open the nRF Connect SDK terminal from the Toolchain Manager or source the SDK environment before building.
 
+On this Windows workstation, the nRF Connect VS Code extension may build successfully while a plain PowerShell cannot find `west`. In that case, run `west` through the bundled toolchain Python:
+
+```powershell
+& C:\ncs\toolchains\936afb6332\opt\bin\python.exe -m west --version
+```
+
+For convenience in the current PowerShell session:
+
+```powershell
+function west { & C:\ncs\toolchains\936afb6332\opt\bin\python.exe -m west @args }
+west --version
+```
+
+If running Zephyr scripts such as Twister from a plain PowerShell, also put the bundled toolchain binaries on `PATH`:
+
+```powershell
+$toolchain = "C:\ncs\toolchains\936afb6332"
+$env:ZEPHYR_BASE = "D:\ncs\v3.3.0\zephyr"
+$env:ZEPHYR_TOOLCHAIN_VARIANT = "zephyr"
+$env:ZEPHYR_SDK_INSTALL_DIR = "$toolchain\opt\zephyr-sdk"
+$env:PATH = "$toolchain\opt\bin;$toolchain\opt\bin\Scripts;$env:PATH"
+function west { & "$toolchain\opt\bin\python.exe" -m west @args }
+```
+
 ## Build
 
 From the repository root:
@@ -204,6 +228,43 @@ Current tests:
 TEST-HW-001: Boot and UART Logs
 TEST-HW-007: Grove Active Buzzer
 TEST-HW-008: Vibration Motor
+```
+
+## Automated Tests
+
+Pure firmware logic tests live in:
+
+```text
+tests/app_core
+```
+
+Run with Twister as a build-only test on the firmware target:
+
+```powershell
+$toolchain = "C:\ncs\toolchains\936afb6332"
+$env:ZEPHYR_BASE = "D:\ncs\v3.3.0\zephyr"
+$env:ZEPHYR_TOOLCHAIN_VARIANT = "zephyr"
+$env:ZEPHYR_SDK_INSTALL_DIR = "$toolchain\opt\zephyr-sdk"
+$env:PATH = "$toolchain\opt\bin;$toolchain\opt\bin\Scripts;$env:PATH"
+& "$toolchain\opt\bin\python.exe" "$env:ZEPHYR_BASE\scripts\twister" -T tests/app_core -p nrf9161dk/nrf9161/ns --build-only -O D:\tw\app_core
+```
+
+`native_sim` execution requires a host compiler/toolchain. If `native_sim` is filtered by Twister on Windows, use the `nrf9161dk/nrf9161/ns --build-only` command above until a host test toolchain is configured.
+
+Use a short Twister output path on Windows. The nRF9161 non-secure build includes TF-M, and long paths under the repository `twister-out` directory can break TF-M generated file creation.
+
+Or build the test app directly:
+
+```powershell
+west build -b nrf9161dk/nrf9161/ns tests/app_core -d build/app_core_tests --pristine
+```
+
+Current coverage:
+
+```text
+app_state valid and invalid transitions
+app_state names
+app_config defaults
 ```
 
 ## Development Milestones

@@ -62,6 +62,34 @@ As soon as a test framework is added, V0 logic candidates are:
 - buzzer startup pattern table
 - vibration pulse duration validation
 
+Initial automated test app:
+
+```text
+tests/app_core
+```
+
+Run:
+
+```powershell
+$toolchain = "C:\ncs\toolchains\936afb6332"
+$env:ZEPHYR_BASE = "D:\ncs\v3.3.0\zephyr"
+$env:ZEPHYR_TOOLCHAIN_VARIANT = "zephyr"
+$env:ZEPHYR_SDK_INSTALL_DIR = "$toolchain\opt\zephyr-sdk"
+$env:PATH = "$toolchain\opt\bin;$toolchain\opt\bin\Scripts;$env:PATH"
+& "$toolchain\opt\bin\python.exe" "$env:ZEPHYR_BASE\scripts\twister" -T tests/app_core -p nrf9161dk/nrf9161/ns --build-only -O D:\tw\app_core
+```
+
+Native execution with `native_sim` requires a host compiler/toolchain. On the current Windows NCS setup, use `nrf9161dk/nrf9161/ns --build-only` unless host tests have been configured.
+
+Use a short `-O` path on Windows because TF-M generated paths can exceed Windows path limits when Twister writes under the repository.
+
+Current status:
+
+```text
+tests/app_core builds successfully for nrf9161dk/nrf9161/ns with --build-only.
+native_sim execution is pending host toolchain setup.
+```
+
 ## V1 Testing Scope
 
 V1 should add automated tests around protocol and telemetry before hardware field tests:

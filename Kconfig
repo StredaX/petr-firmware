@@ -62,7 +62,7 @@ config PET_TRACKER_VIBRATION_BOOT_TEST_MS
 
 config PET_TRACKER_VIBRATION_BOOT_TEST_REPEATS
     int "Vibration boot test pulse repeat count"
-    depends on PET_TRACKER_VIBRATION_BOOT_TEST
+    depends on PET_TRACKER_VIBRATION_MOTOR
     default 3
     range 1 5
     help

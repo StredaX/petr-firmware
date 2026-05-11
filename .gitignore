@@ -2,6 +2,7 @@
 build/
 build-*/
 twister-out/
+twister-out.*/
 zephyr/
 modules/
 .west/

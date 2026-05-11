@@ -1,0 +1,10 @@
+tests:
+  firmware.app_core:
+    platform_allow:
+      - nrf9161dk/nrf9161/ns
+      - native_sim
+    integration_platforms:
+      - nrf9161dk/nrf9161/ns
+    tags:
+      - app
+      - unit
